@@ -2,13 +2,15 @@
 import requests
 from bs4 import BeautifulSoup
 from app.models import resturant
+from app.models import menu
+from app.models import food_item
 
 # Bon Appetit Website Base URL
 BASE_URL =  'https://emoryatlanta.cafebonappetit.com'
 
-def get_soup(is_test = False):
+def get_soup(is_test:bool = False):
     '''
-        Get scrapped data if it is not a test
+    Get scrapped data if it is not a test
     '''
     if not is_test:
         html = requests.get(BASE_URL)
@@ -26,7 +28,7 @@ def get_soup(is_test = False):
         soup = BeautifulSoup(contents, 'html.parser')
         return soup
 
-def get_resturants(soup=BeautifulSoup):
+def get_resturants(soup: BeautifulSoup):
     '''
     Get all resturants listed on the Bon Appetit Website,
     their hours, and crawl URL's
@@ -46,6 +48,18 @@ def get_resturants(soup=BeautifulSoup):
         resturants.append(resturant.Resturant(name, link, hours))
 
     return resturants
+
+def scrape_resturant_to_menu(resturant: resturant.Resturant) -> menu.Menu:
+    '''
+    Scrape a resturant and convert data to Menu object
+    '''
+    resturant_page = requests.get(resturant.link)
+    # TODO: Parse resturant_html to find menu if any
+    resturant_html = BeautifulSoup(resturant_page, 'html.parser')
+    food_items = []
+    # TODO: Get food items from resturant here!
+    # Return empty list of food_items if no menu at this time
+    return menu.Menu(resturant, food_items)
 
 
 if __name__ == '__main__':
