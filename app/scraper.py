@@ -5,14 +5,16 @@ from app.models import resturant
 from app.models import menu
 from app.models import food_item
 
+import sys
+
 # Bon Appetit Website Base URL
 BASE_URL =  'https://emoryatlanta.cafebonappetit.com'
 
-def get_soup(is_test:bool = False):
+def get_soup():
     '''
     Get scrapped data if it is not a test
     '''
-    if not is_test:
+    if 'pytest' not in sys.modules:
         html = requests.get(BASE_URL)
         if html.status_code != 200:
             raise Exception(f'[Scraper.py] Invalid status \
@@ -53,10 +55,21 @@ def scrape_resturant_to_menu(resturant: resturant.Resturant) -> menu.Menu:
     '''
     Scrape a resturant and convert data to Menu object
     '''
-    resturant_page = requests.get(resturant.link)
-    # TODO: Parse resturant_html to find menu if any
+    if "pytest" not in sys.modules:
+        resturant_page = requests.get(resturant.link)
+    else:
+        with open('./data/dct.html', 'r', encoding='utf-8') as html:
+            resturant_page = html.read()
     resturant_html = BeautifulSoup(resturant_page, 'html.parser')
-    food_items = []
+    # Finds serve times -- CSS is consistent across different Cafe's
+    # TODO: Get serve time
+    # TODO: Get serve name
+    # TODO: Refactor app.models.resturant to seperate by serve time
+    serve_blocks = resturant_html.select('section.panel.s-wrapper.site-panel.site-panel--daypart')
+    for serve_block in serve_blocks:
+        
+
+    food_items = serve_times
     # TODO: Get food items from resturant here!
     # Return empty list of food_items if no menu at this time
     return menu.Menu(resturant, food_items)
