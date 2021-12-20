@@ -13,7 +13,8 @@ def get_soup(is_test = False):
     if not is_test:
         html = requests.get(BASE_URL)
         if html.status_code != 200:
-            raise Exception(f'[Scraper.py] Invalid status code {html.status_code} for ROOT_URL: {ROOT_URL}')
+            raise Exception(f'[Scraper.py] Invalid status \
+                    code {html.status_code} for BASE_URL: {BASE_URL}')
         soup = BeautifulSoup(html.content, 'html.parser')
         return soup
 
