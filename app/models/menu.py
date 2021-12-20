@@ -1,18 +1,18 @@
 '''
-Implements the Menu class which stores resturant
+Implements the Menu class which stores restaurant
 and food item data
 '''
 
-from .resturant import Resturant
+from .restaurant import Restaurant
 from .food_item import FoodItem
 
 
 class Menu:
     '''
-    Stores the resturant and food item data
+    Stores the restaurant and food item data
     '''
-    def __init__(self, resturant: Resturant, food_items: list = None):
-        self.resturant = resturant
+    def __init__(self, restaurant: Restaurant, food_items: list = None):
+        self.restaurant = restaurant
         self.food_items = food_items
         if self.food_items is None:
             self.food_items = []

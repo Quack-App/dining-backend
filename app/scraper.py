@@ -1,7 +1,7 @@
 '''Implements scraper functionality to get Bon Appetit Data as Models'''
 import requests
 from bs4 import BeautifulSoup
-from app.models import resturant
+from app.models import restaurant
 from app.models import menu
 from app.models import food_item
 
@@ -30,52 +30,54 @@ def get_soup():
         soup = BeautifulSoup(contents, 'html.parser')
         return soup
 
-def get_resturants(soup: BeautifulSoup):
+def get_restaurants(soup: BeautifulSoup):
     '''
-    Get all resturants listed on the Bon Appetit Website,
+    Get all restaurants listed on the Bon Appetit Website,
     their hours, and crawl URL's
     '''
-    resturants_html = soup.findAll('div',
+    restaurants_html = soup.findAll('div',
             attrs = {'class': 'c-accordion__row site-panel__cafeinfo-row'})
-    resturants = []
-    for resturant_html in resturants_html:
-        name = resturant_html.find('span',
+    restaurants = []
+    for restaurant_html in restaurants_html:
+        name = restaurant_html.find('span',
                 attrs = {'class': 'c-accordion__header-inner ' +
                         'site-panel__cafeinfo-row-header-inner'}).text.strip()
-        link = resturant_html.find('a',
+        link = restaurant_html.find('a',
                 attrs = {'class': 'site-panel__cafeinfo-view-more'})['href']
-        hours = resturant_html.find('span',
+        hours = restaurant_html.find('span',
                 attrs = {'class' : 'site-panel__cafeinfo-header-extra'}).text.strip()
 
-        resturants.append(resturant.Resturant(name, link, hours))
+        restaurants.append(restaurant.Restaurant(name, link, hours))
 
-    return resturants
+    return restaurants
 
-def scrape_resturant_to_menu(resturant: resturant.Resturant) -> menu.Menu:
+def scrape_restaurant_to_menu(restaurant: restaurant.Restaurant) -> menu.Menu:
     '''
-    Scrape a resturant and convert data to Menu object
+    Scrape a restaurant and convert data to Menu object
     '''
     if "pytest" not in sys.modules:
-        resturant_page = requests.get(resturant.link)
+        restaurant_page = requests.get(restaurant.link)
     else:
         with open('./data/dct.html', 'r', encoding='utf-8') as html:
-            resturant_page = html.read()
-    resturant_html = BeautifulSoup(resturant_page, 'html.parser')
+            restaurant_page = html.read()
+    restaurant_html = BeautifulSoup(restaurant_page, 'html.parser')
     # Finds serve times -- CSS is consistent across different Cafe's
-    # TODO: Get serve time
-    # TODO: Get serve name
-    # TODO: Refactor app.models.resturant to seperate by serve time
-    serve_blocks = resturant_html.select('section.panel.s-wrapper.site-panel.site-panel--daypart')
+    # TODO: Get serve times
+    # TODO: Get current serve time
+    # TODO: Get serve names
+    # TODO: Get current serve name
+    # TODO: Refactor app.models.restaurant to seperate by serve time
+    serve_blocks = restaurant_html.select('section.panel.s-wrapper.site-panel.site-panel--daypart')
     for serve_block in serve_blocks:
-        
-
-    food_items = serve_times
-    # TODO: Get food items from resturant here!
+        # TODO: Get food items from restaurant here!
+        pass
+    food_items = serve_blocks
+    
     # Return empty list of food_items if no menu at this time
-    return menu.Menu(resturant, food_items)
+    return menu.Menu(restaurant, food_items)
 
 
 if __name__ == '__main__':
     s = get_soup()
-    r = get_resturants(s)
+    r = get_restaurants(s)
     print(r)

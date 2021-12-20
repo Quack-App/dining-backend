@@ -1,5 +1,5 @@
 import app.scraper as scraper
-from app.models.resturant import Resturant
+from app.models.restaurant import Restaurant
 
 from app import scraper
 
@@ -8,17 +8,17 @@ def test_get_soup():
    soup = scraper.get_soup()
    assert soup is not None
 
-# Test to ensure that we can get all 15 resturants
-def test_get_resturant():
+# Test to ensure that we can get all 15 restaurants
+def test_get_restaurant():
     soup = scraper.get_soup()
     assert soup is not None
-    resturants = scraper.get_resturants(soup)
-    assert len(resturants) == 15
+    restaurants = scraper.get_restaurants(soup)
+    assert len(restaurants) == 15
 
-def test_scrape_resturant_to_menu():
-    resturant = Resturant('DCT', '', '')
-    menu = scraper.scrape_resturant_to_menu(resturant)
+def test_scrape_restaurant_to_menu():
+    restaurant = Restaurant('DCT', '', '')
+    menu = scraper.scrape_restaurant_to_menu(restaurant)
     assert menu is not None
-    assert menu.resturant == resturant
+    assert menu.restaurant == restaurant
     assert len(menu.food_items) == 5
 

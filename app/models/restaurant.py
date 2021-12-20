@@ -1,4 +1,4 @@
-class Resturant:
+class Restaurant:
     def __init__(self, name: str, link: str, hours: str):
         self.name = name
         self.link = link
@@ -8,4 +8,4 @@ class Resturant:
         return f'{self.name}, {self.hours}, {self.link}'
 
     def __repr__(self):
-        return f'<Resturant: {self.name}, {self.hours}, {self.link}>'
+        return f'<Restaurant: {self.name}, {self.hours}, {self.link}>'
