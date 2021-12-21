@@ -20,5 +20,8 @@ def test_scrape_restaurant_to_menu():
     menu = scraper.scrape_restaurant_to_menu(restaurant)
     assert menu is not None
     assert menu.restaurant == restaurant
-    assert len(menu.food_items) == 5
+    assert menu.menu != {}
+    assert len(menu.menu.keys()) == 5
+    assert len(menu.menu['Breakfast'].keys()) == 10
+    assert len(menu.menu['Breakfast']['breakfast']) == 6
 
