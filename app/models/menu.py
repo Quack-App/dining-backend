@@ -30,6 +30,12 @@ class Menu:
             # Set empty block
             self.menu[serve_block] = {}
 
+        if station_name == "":
+            if len(food_items) > 0:
+                raise Exception(f"Tried to create empty station name with {len(food_items)} food items")
+            else:
+                return False
+
         if station_name not in self.menu[serve_block]:
             # Add station to serve block
             self.menu[serve_block][station_name] = []

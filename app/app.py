@@ -10,16 +10,14 @@ menus = []
 
 @app.get("/")
 def root():
-    # Redirect to docs when visiting /
-    url = app.url_path_for("/docs")
-    response = RedirectResponse(url=url)
+    response = RedirectResponse(url="/docs")
     return response
 
 
 @app.get("/get_data")
 def get_data(response: Response):
-    response.body = {'menus': [menu.to_json() for menu in menus]} 
     response.status_code = status.HTTP_200_OK
+    return {"menus": [menu.to_json() for menu in menus]}
 
 
 @app.on_event("startup")
@@ -35,3 +33,4 @@ def scrape_data():
     menus = []
     for restaurant in restaurants:
         menus.append(scraper.scrape_restaurant_to_menu(restaurant))
+    return {"msg" : "Finished scraping data"}
