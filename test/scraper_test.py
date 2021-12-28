@@ -25,4 +25,10 @@ def test_scrape_restaurant_to_menu():
     assert menu.menu != {}
     assert len(menu.menu.keys()) == 5
     assert len(menu.menu["Breakfast"].keys()) == 10
+    assert len(menu.menu["Breakfast"]) == 10
+    assert len(menu.menu["Lunch"]) == 17
+    assert len(menu.menu["Late Lunch"]) == 3
+    assert len(menu.menu["Dinner"]) == 8
+    assert len(menu.menu["Dinner"]["605 kitchen"]) == 1
+    assert len(menu.menu["Late Night"]) == 3
     assert len(menu.menu["Breakfast"]["breakfast"]) == 6
