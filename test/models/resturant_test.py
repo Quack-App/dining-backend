@@ -1,10 +1,10 @@
-from app.models.resturant import Resturant
+from app.models.restaurant import Restaurant
 
-def test_create_resturant():
+def test_create_restaurant():
     name = "Cafe Name"
     link = "https://testlink.com"
     hours = "8am - 4pm"
-    resturant = Resturant(name, link, hours)
-    assert name == resturant.name
-    assert link == resturant.link
-    assert hours == resturant.hours
+    restaurant = Restaurant(name, link, hours)
+    assert name == restaurant.name
+    assert link == restaurant.link
+    assert hours == restaurant.hours
